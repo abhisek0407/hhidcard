@@ -1,0 +1,35 @@
+{
+  "name": "framein-goa-hhidcard",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Dibyajyoti(dibyajyoti1515)",
+  "license": "MIT",
+  "description": "Frame In Goa — profile frames, builder ID cards and team posts for Hacker House Goa 2026.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@vercel/blob": "^0.27.0",
+    "heic2any": "^0.0.4",
+    "next": "15.1.9",
+    "qrcode": "^1.5.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.0.3",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.23.9",
+    "typescript": "^5.7.3"
+  }
+}
