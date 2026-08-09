@@ -1,6 +1,6 @@
 import QRCode from "qrcode";
 
-export const QR_URL = "https://hhidcard.vercel.app/";
+export const QR_URL = "https://hhidcard-pi.vercel.app/";
 
 export function drawQRCode(
   ctx: CanvasRenderingContext2D,

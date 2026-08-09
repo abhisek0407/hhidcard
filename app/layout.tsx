@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+// Next.js loads this stylesheet at runtime; its module declaration is provided by the build pipeline.
+// @ts-expect-error CSS side-effect imports are handled by Next.js.
 import "./globals.css";
 
 const title = "Frame In Goa — Hacker House Goa 2026";
