@@ -1,6 +1,12 @@
-import { drawCover, gridPattern, rr, type Drawable, type Focus } from "../canvas";
+import {
+  drawCover,
+  drawGoaBackground,
+  rr,
+  type Drawable,
+  type Focus,
+} from "../canvas";
 import { C, DISPLAY, EVENT_DATES, HASHTAG, MONO } from "../tokens";
-
+import { drawQRCode, QR_URL } from "./qr";
 export const BANNER_W = 1500;
 export const BANNER_H = 500;
 export const BANNER_RATIO = BANNER_H / BANNER_W;
@@ -22,14 +28,8 @@ export function drawBanner(
   const u = W / BANNER_W; // scale unit, so all numbers read at 1500px
 
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = C.green;
-  ctx.fillRect(0, 0, W, H);
 
-  const grid = gridPattern(ctx, 60 * u, "rgba(255,251,232,.09)");
-  if (grid) {
-    ctx.fillStyle = grid;
-    ctx.fillRect(0, 0, W, H);
-  }
+  drawGoaBackground(ctx, W, H);
 
   // photo panel, right hand third
   const panelW = 500 * u;
@@ -77,4 +77,10 @@ export function drawBanner(
   // pink rule down the left edge
   ctx.fillStyle = C.pink;
   ctx.fillRect(60 * u, 120 * u, 8 * u, 300 * u);
+  // QR code linking to the project website
+  const qrSize = 68 * u;
+const qrX = 60 * u;
+const qrY = 425 * u;
+
+  drawQRCode(ctx, QR_URL, qrX, qrY, qrSize);
 }

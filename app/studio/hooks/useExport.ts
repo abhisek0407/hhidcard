@@ -1,19 +1,13 @@
-/**
- * useExport — export-to-blob, download, and share-to-X logic.
- *
- * Owns no state. Creates `exportBlob` (offscreen canvas at export resolution),
- * `onDownload` (export + saveBlob), and `onShare` (export + shareImage,
- * with desktop fallback via uploadForLink + tweetUrl).
- *
- * Extracted from the monolithic Studio.tsx.
- */
-
 import { useCallback, useState } from "react";
 import type { Drawable, Focus } from "@/lib/canvas";
 import { drawPFP, PFP_EXPORT } from "@/lib/render/pfp";
 import { drawID, ID_EXPORT_W, ID_RATIO } from "@/lib/render/id";
 import { drawTeam, TEAM_EXPORT } from "@/lib/render/team";
-import { drawTeamGroup, drawNameTags, GROUP_EXPORT } from "@/lib/render/team-group";
+import {
+  drawTeamGroup,
+  drawNameTags,
+  GROUP_EXPORT,
+} from "@/lib/render/team-group";
 import type { NameTag } from "@/lib/render/team-group";
 import { BANNER_RATIO, BANNER_W, drawBanner } from "@/lib/render/banner";
 import { SIGNATURE } from "@/lib/tokens";
@@ -47,14 +41,26 @@ export function useExport(params: {
   setStatus: (v: string | null) => void;
 }): Export {
   const {
-    mode, teamMode, paint, camera, videoRef, imageRef, focusRef, groupTags,
+    mode,
+    teamMode,
+    paint,
+    camera,
+    videoRef,
+    imageRef,
+    focusRef,
+    groupTags,
     filterPreset,
-    setManualLink, setBusy, setStatus,
+    setManualLink,
+    setBusy,
+    setStatus,
   } = params;
 
   const [shareUrl, setShareUrl] = useState<string | null>(null);
 
-  const exportBlob = useCallback(async (): Promise<{ blob: Blob; filename: string }> => {
+  const exportBlob = useCallback(async (): Promise<{
+    blob: Blob;
+    filename: string;
+  }> => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Canvas unavailable");
@@ -74,12 +80,16 @@ export function useExport(params: {
     } else if (mode === "team") {
       size = teamMode === "group" ? GROUP_EXPORT : TEAM_EXPORT;
       canvas.width = canvas.height = size;
-      filename = teamMode === "group" ? "hhgoa-2026-team-group.png" : "hhgoa-2026-team.png";
+      filename =
+        teamMode === "group"
+          ? "hhgoa-2026-team-group.png"
+          : "hhgoa-2026-team.png";
     } else {
       canvas.width = canvas.height = size;
     }
 
-    const source = camera && videoRef.current ? videoRef.current : imageRef.current;
+    const source =
+      camera && videoRef.current ? videoRef.current : imageRef.current;
     paint(ctx, size, source, focusRef.current);
     if (mode === "team" && teamMode === "group") {
       drawNameTags(ctx, size, groupTags);
@@ -99,42 +109,70 @@ export function useExport(params: {
   }, [exportBlob]);
 
   const onShare = useCallback(async () => {
-    setManualLink(null);
-    setShareUrl(null);
-    setBusy("Preparing\u2026");
-    try {
-      const { blob, filename } = await exportBlob();
-      const result = await shareImage(blob, filename);
-      if (result === "shared") {
-        setStatus("Shared.");
-      } else if (result === "needs-manual") {
-        const url = await uploadForLink(blob);
-        const rawUrl = url
-          ? new URL(
-              `/p/${btoa(url).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")}`,
-              location.origin,
-            ).toString()
-          : null;
-        setShareUrl(rawUrl);
-        setManualLink(
-          url
-            ? tweetUrl(rawUrl!)
-            : tweetUrl(),
-        );
-        setStatus(
-          url
-            ? "Image saved. Open X \u2014 the link preview will show your graphic."
-            : "Image saved. Open X and attach it to the post.",
-        );
-      }
-    } catch {
-      setStatus("Could not prepare the image. Try again.");
-    } finally {
-      setBusy(null);
-    }
-  }, [exportBlob]); // eslint-disable-line react-hooks/exhaustive-deps
+  setManualLink(null);
+  setShareUrl(null);
+  setBusy("Preparing…");
 
-  return { onDownload, onShare, shareUrl };
+  // Open a blank tab immediately while the click is still active.
+  const xWindow = window.open("about:blank", "_blank");
+
+  try {
+    const { blob, filename } = await exportBlob();
+
+    const result = await shareImage(blob, filename);
+
+    if (result === "shared") {
+      setStatus("Shared.");
+      return;
+    }
+
+    if (result === "needs-manual") {
+      const url = await uploadForLink(blob);
+
+      const rawUrl = url
+        ? new URL(
+            `/p/${btoa(url)
+              .replace(/\+/g, "-")
+              .replace(/\//g, "_")
+              .replace(/=+$/, "")}`,
+            location.origin,
+          ).toString()
+        : null;
+
+      setShareUrl(rawUrl);
+
+      const xUrl = rawUrl
+        ? tweetUrl(rawUrl)
+        : tweetUrl();
+
+      setManualLink(xUrl);
+
+      // Navigate the already-open tab to X.
+      if (xWindow) {
+        xWindow.location.href = xUrl;
+      } else {
+        // Fallback if the browser blocked the popup.
+        window.location.href = xUrl;
+      }
+
+      setStatus(
+        rawUrl
+          ? "Opening X with your generated graphic."
+          : "Opening X with your caption.",
+      );
+    }
+  } catch (error) {
+    console.error(error);
+
+    if (xWindow) {
+      xWindow.close();
+    }
+
+    setStatus("Could not prepare the image. Try again.");
+  } finally {
+    setBusy(null);
+  }
+}, [exportBlob]);
 
   return { onDownload, onShare, shareUrl };
 }

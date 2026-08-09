@@ -1,16 +1,23 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  content: ["./app/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}",
+  ],
+
   theme: {
     extend: {
       colors: {
-        green: "#0B6839",
-        deep: "#063F22",
-        cream: "#FFFBE8",
-        pink: "#FF0080",
-        ink: "#08210F",
+        // Tropical Goa palette
+        green: "#087F6A",
+        deep: "#073B32",
+        cream: "#FFF3D6",
+        pink: "#FF6B5A",
+        ink: "#102A27",
+        sun: "#FFD166",
       },
+
       fontFamily: {
         display: [
           '"Space Grotesk"',
@@ -19,6 +26,7 @@ export default {
           '"Segoe UI"',
           "sans-serif",
         ],
+
         mono: [
           '"JetBrains Mono"',
           "ui-monospace",
@@ -29,5 +37,6 @@ export default {
       },
     },
   },
+
   plugins: [],
 } satisfies Config;

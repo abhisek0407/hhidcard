@@ -21,7 +21,7 @@ import { drawTeamGroup } from "@/lib/render/team-group";
 import { BANNER_RATIO, drawBanner } from "@/lib/render/banner";
 import { builderTitle, residentNo } from "@/lib/titles";
 import { PREVIEW, FILTER_MAP, type FilterPreset } from "../config";
-
+import { drawQRCode, QR_URL } from "@/lib/render/qr";
 export type PreviewRender = {
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
   rafRef: React.MutableRefObject<number | null>;

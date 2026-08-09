@@ -196,3 +196,305 @@ export function gridPattern(
   }
   return ctx.createPattern(tile, "repeat");
 }
+export function drawGoaBackground(
+  ctx: CanvasRenderingContext2D,
+  W: number,
+  H: number,
+) {
+  // Base green
+  ctx.fillStyle = "#0b6839";
+  ctx.fillRect(0, 0, W, H);
+
+  // Existing subtle grid
+  const grid = gridPattern(
+    ctx,
+    Math.min(W, H) * 0.06,
+    "rgba(255,251,232,.07)",
+  );
+
+  if (grid) {
+    ctx.fillStyle = grid;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /*
+   * Soft sunset glow
+   */
+  const sunX = W * 0.18;
+  const sunY = H * 0.42;
+  const sunRadius = Math.min(W, H) * 0.24;
+
+  const glow = ctx.createRadialGradient(
+    sunX,
+    sunY,
+    0,
+    sunX,
+    sunY,
+    sunRadius,
+  );
+
+  glow.addColorStop(0, "rgba(255, 224, 96, 0.22)");
+  glow.addColorStop(0.45, "rgba(255, 200, 80, 0.09)");
+  glow.addColorStop(1, "rgba(255, 200, 80, 0)");
+
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+
+  /*
+   * Decorative sun
+   */
+  ctx.beginPath();
+  ctx.arc(
+    sunX,
+    sunY,
+    Math.min(W, H) * 0.075,
+    0,
+    Math.PI * 2,
+  );
+
+  ctx.fillStyle = "rgba(255, 238, 145, 0.20)";
+  ctx.fill();
+
+  /*
+   * Distant hills
+   */
+  ctx.save();
+
+  ctx.fillStyle = "rgba(4, 55, 32, 0.48)";
+  ctx.beginPath();
+
+  ctx.moveTo(0, H * 0.70);
+
+  ctx.quadraticCurveTo(
+    W * 0.14,
+    H * 0.58,
+    W * 0.28,
+    H * 0.70,
+  );
+
+  ctx.quadraticCurveTo(
+    W * 0.43,
+    H * 0.58,
+    W * 0.58,
+    H * 0.70,
+  );
+
+  ctx.quadraticCurveTo(
+    W * 0.75,
+    H * 0.56,
+    W,
+    H * 0.68,
+  );
+
+  ctx.lineTo(W, H);
+  ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
+
+  /*
+   * Ocean / wave lines
+   */
+  ctx.save();
+
+  ctx.strokeStyle = "rgba(255,251,232,.12)";
+  ctx.lineWidth = Math.max(1, Math.min(W, H) * 0.004);
+
+  for (let i = 0; i < 5; i++) {
+    const y = H * (0.73 + i * 0.045);
+
+    ctx.beginPath();
+    ctx.moveTo(W * 0.04, y);
+
+    ctx.bezierCurveTo(
+      W * 0.20,
+      y - H * 0.018,
+      W * 0.32,
+      y + H * 0.018,
+      W * 0.48,
+      y,
+    );
+
+    ctx.bezierCurveTo(
+      W * 0.65,
+      y - H * 0.018,
+      W * 0.80,
+      y + H * 0.018,
+      W * 0.96,
+      y,
+    );
+
+    ctx.stroke();
+  }
+
+  ctx.restore();
+
+  /*
+   * Tropical palm trees
+   */
+  drawPalm(ctx, W * 0.07, H * 0.68, Math.min(W, H) * 0.30, true);
+  drawPalm(ctx, W * 0.93, H * 0.69, Math.min(W, H) * 0.28, false);
+
+  /*
+   * Small tropical leaves near the bottom corners
+   */
+  drawLeafCluster(ctx, W * 0.02, H * 0.92, Math.min(W, H) * 0.14);
+  drawLeafCluster(ctx, W * 0.98, H * 0.92, Math.min(W, H) * 0.14);
+
+  /*
+   * Fireflies / glowing particles
+   */
+  const particles = [
+    [0.12, 0.76],
+    [0.18, 0.84],
+    [0.28, 0.73],
+    [0.71, 0.78],
+    [0.82, 0.72],
+    [0.90, 0.84],
+    [0.62, 0.88],
+    [0.39, 0.82],
+  ];
+
+  for (const [px, py] of particles) {
+    const x = W * px;
+    const y = H * py;
+    const r = Math.max(2, Math.min(W, H) * 0.008);
+
+    const particleGlow = ctx.createRadialGradient(
+      x,
+      y,
+      0,
+      x,
+      y,
+      r * 4,
+    );
+
+    particleGlow.addColorStop(
+      0,
+      "rgba(255,240,120,.55)",
+    );
+
+    particleGlow.addColorStop(
+      1,
+      "rgba(255,240,120,0)",
+    );
+
+    ctx.fillStyle = particleGlow;
+    ctx.beginPath();
+    ctx.arc(x, y, r * 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "rgba(255,245,150,.85)";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+
+/**
+ * Draws a stylized tropical palm tree.
+ */
+function drawPalm(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  size: number,
+  flip = false,
+) {
+  ctx.save();
+
+  const direction = flip ? -1 : 1;
+
+  ctx.strokeStyle = "rgba(3,42,27,.72)";
+  ctx.fillStyle = "rgba(3,42,27,.72)";
+
+  /*
+   * Curved trunk
+   */
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+
+  ctx.quadraticCurveTo(
+    x + direction * size * 0.10,
+    y - size * 0.42,
+    x + direction * size * 0.02,
+    y - size * 0.78,
+  );
+
+  ctx.lineWidth = size * 0.075;
+  ctx.stroke();
+
+  /*
+   * Palm crown
+   */
+  const crownX = x + direction * size * 0.02;
+  const crownY = y - size * 0.78;
+
+  for (let i = 0; i < 7; i++) {
+    const angle =
+      -Math.PI / 2 +
+      (i - 3) * 0.38;
+
+    const endX =
+      crownX + Math.cos(angle) * size * 0.34;
+
+    const endY =
+      crownY + Math.sin(angle) * size * 0.34;
+
+    ctx.beginPath();
+    ctx.moveTo(crownX, crownY);
+
+    ctx.quadraticCurveTo(
+      crownX +
+        Math.cos(angle - 0.3) *
+          size *
+          0.18,
+      crownY +
+        Math.sin(angle - 0.3) *
+          size *
+          0.18,
+      endX,
+      endY,
+    );
+
+    ctx.lineWidth = size * 0.035;
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+
+/**
+ * Decorative tropical leaves.
+ */
+function drawLeafCluster(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  size: number,
+) {
+  ctx.save();
+
+  ctx.fillStyle = "rgba(3,48,28,.65)";
+
+  for (let i = 0; i < 5; i++) {
+    const angle = -Math.PI * 0.85 + i * 0.28;
+
+    ctx.beginPath();
+    ctx.ellipse(
+      x,
+      y,
+      size * 0.10,
+      size * 0.40,
+      angle,
+      0,
+      Math.PI * 2,
+    );
+    ctx.fill();
+  }
+
+  ctx.restore();
+}

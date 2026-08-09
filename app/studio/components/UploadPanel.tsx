@@ -17,7 +17,21 @@ export function UploadPanel(props: {
         Step 1 — your photo
       </p>
       <div
-        className="border-2 border-dashed border-green/45 rounded-2xl bg-green/[0.05] px-[18px] py-[30px] text-center cursor-pointer transition-[background,border-color] duration-180"
+       className="
+  border-2
+  border-dashed
+  border-green/50
+  rounded-2xl
+  bg-cream/45
+  px-[18px]
+  py-[30px]
+  text-center
+  cursor-pointer
+  transition-[background,border-color]
+  duration-180
+  hover:bg-cream/70
+  hover:border-pink
+"
         tabIndex={0}
         role="button"
         aria-label="Add a photo"

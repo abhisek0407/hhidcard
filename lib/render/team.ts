@@ -1,12 +1,19 @@
+// import {
+//   DEFAULT_FOCUS,
+//   drawCover,
+//   fitFont,
+//   gridPattern,
+//   type Drawable,
+// } from "../canvas";
 import {
   DEFAULT_FOCUS,
   drawCover,
   fitFont,
-  gridPattern,
+  drawGoaBackground,
   type Drawable,
 } from "../canvas";
 import { C, DISPLAY, EVENT_DATES, HASHTAG, MONO } from "../tokens";
-
+import { drawQRCode, QR_URL } from "./qr";
 export const TEAM_EXPORT = 1200;
 
 export type Member = { img: Drawable };
@@ -22,15 +29,9 @@ export function drawTeam(
   members: Member[],
   names: string[],
 ) {
-  ctx.clearRect(0, 0, S, S);
-  ctx.fillStyle = C.green;
-  ctx.fillRect(0, 0, S, S);
+ ctx.clearRect(0, 0, S, S);
 
-  const grid = gridPattern(ctx, S * 0.06, "rgba(255,251,232,.09)");
-  if (grid) {
-    ctx.fillStyle = grid;
-    ctx.fillRect(0, 0, S, S);
-  }
+drawGoaBackground(ctx, S, S);
 
   const n = members.length;
 
@@ -121,6 +122,17 @@ export function drawTeam(
   ctx.fillStyle = C.cream;
   ctx.font = `700 ${S * 0.034}px ${MONO}`;
   ctx.fillText(HASHTAG, S / 2, S * 0.945);
+  // QR code linking to the project website
+const qrSize = S * 0.085;
+const qrX = S * 0.055;
+const qrY = S * 0.835;
 
+drawQRCode(
+  ctx,
+  QR_URL,
+  qrX,
+  qrY,
+  qrSize,
+);
   ctx.textAlign = "left";
 }

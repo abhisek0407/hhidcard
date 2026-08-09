@@ -14,7 +14,13 @@
   }
 
   body {
-    background: theme("colors.green");
+    background-image: url("/Goa_background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    /* background: theme("colors.green"); */
     color: theme("colors.cream");
     font-family: theme("fontFamily.display");
     -webkit-font-smoothing: antialiased;
@@ -35,11 +41,15 @@
     pointer-events: none;
     z-index: 0;
     background:
-      radial-gradient(
+      /* radial-gradient(
         120% 60% at 50% -10%,
         rgba(255, 0, 128, 0.2),
         transparent 60%
-      ),
+      ), */
+       linear-gradient(
+      rgba(6, 63, 34, 0.35),
+      rgba(6, 63, 34, 0.35)
+    ),
       repeating-linear-gradient(
         0deg,
         rgba(255, 251, 232, 0.045) 0 1px,
@@ -65,17 +75,13 @@
   }
 }
 
-
-
-
-
-@layer components {
+/* @layer components { */
   /*
    * .hint — small label overlaid on the canvas stage (e.g. "Drag to reposition").
    * Uses absolute positioning at bottom-left inside a relative parent.
    * No clean Tailwind equivalent for this compound pattern.
    */
-  .hint {
+  /* .hint {
     position: absolute;
     left: 10px;
     bottom: 10px;
@@ -88,13 +94,13 @@
     background: rgba(6, 63, 34, 0.82);
     padding: 6px 9px;
     border-radius: 999px;
-  }
+  } */
 
   /*
    * .overlay — full-inset cover with centered text, used for loading state
    * over the canvas stage. No clean Tailwind compound utility.
    */
-  .overlay {
+  /* .overlay {
     position: absolute;
     inset: 0;
     display: grid;
@@ -105,7 +111,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: theme("colors.cream");
-  }
+  } */
 
   /*
    * .tag-pill — draggable name tag pill over the group photo.
@@ -113,7 +119,7 @@
    * for centering, grab cursor, text overflow ellipsis. No Tailwind
    * utility for this precise combination.
    */
-  .tag-pill {
+  /* .tag-pill {
     position: absolute;
     transform: translate(-50%, -50%);
     background: rgba(6, 63, 34, 0.68);
@@ -135,7 +141,9 @@
     text-overflow: ellipsis;
   }
 
-  .tag-pill:active { cursor: grabbing; }
+  .tag-pill:active {
+    cursor: grabbing;
+  } */
 
   /*
    * .stage canvas — canvas elements inside the preview stage.
@@ -143,21 +151,23 @@
    * cleanly in utilities because the parent :active drives the
    * child's cursor, so a group utility would be fragile here.
    */
-  .stage canvas {
+  /* .stage canvas {
     display: block;
     width: 100%;
     height: auto;
     cursor: grab;
   }
 
-  .stage:active canvas { cursor: grabbing; }
+  .stage:active canvas {
+    cursor: grabbing;
+  } */
 
   /*
    * Range slider — native <input type="range"> styling.
    * Vendor-prefixed pseudo-elements (-webkit-slider-thumb,
    * -moz-range-thumb) have no Tailwind equivalent.
    */
-  input[type="range"] {
+  /* input[type="range"] {
     flex: 1;
     appearance: none;
     height: 3px;
@@ -186,31 +196,213 @@
   input[type="range"]:focus-visible {
     outline: 2px solid theme("colors.pink");
     outline-offset: 6px;
-  }
+  } */
 
   /*
    * Focus-visible patterns reused across migrated classes —
    * Tailwind's focus-visible utility doesn't support custom
    * offset values easily.
    */
-  .drop:focus-visible { outline: 2px solid theme("colors.pink"); outline-offset: 3px; }
-  .slot:focus-visible { outline: 2px solid theme("colors.pink"); outline-offset: 2px; }
-  .subtab:focus-visible { outline: 2px solid theme("colors.pink"); outline-offset: 2px; }
-  .way:focus-visible { outline: 2px solid theme("colors.ink"); outline-offset: 2px; }
-  .tabs-btn:focus-visible { outline: 2px solid theme("colors.cream"); outline-offset: 2px; }
+  /* .drop:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 3px;
+  }
+  .slot:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 2px;
+  }
+  .subtab:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 2px;
+  }
+  .way:focus-visible {
+    outline: 2px solid theme("colors.ink");
+    outline-offset: 2px;
+  }
+  .tabs-btn:focus-visible {
+    outline: 2px solid theme("colors.cream");
+    outline-offset: 2px;
+  } */
 
   /*
    * Transition helper for tabs/subtabs/colorway buttons —
    * cleaner as a single rule than repeating inline.
    */
-  .tab-transition { transition: background 0.18s, color 0.18s; }
+  /* .tab-transition {
+    transition:
+      background 0.18s,
+      color 0.18s;
+  } */
 
   /*
    * Brand-colored shadows used on cards and shared frame img.
    * Tailwind's shadow scale doesn't include these.
    */
-  .shadow-deep { box-shadow: 12px 12px 0 theme("colors.deep"); }
-  .shadow-pink { box-shadow: 12px 12px 0 rgba(255, 0, 128, 0.9); }
+  /* .shadow-deep {
+    box-shadow: 12px 12px 0 theme("colors.deep");
+  }
+  .shadow-pink {
+    box-shadow: 12px 12px 0 rgba(255, 0, 128, 0.9);
+  }
+} */
+
+@layer components {
+  .hint {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    pointer-events: none;
+
+    font-family: theme("fontFamily.mono");
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: theme("colors.cream");
+    background: rgba(7, 59, 50, 0.88);
+
+    padding: 6px 9px;
+    border-radius: 999px;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(7, 59, 50, 0.92);
+
+    font-family: theme("fontFamily.mono");
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    color: theme("colors.cream");
+  }
+
+  .tag-pill {
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    background: rgba(7, 59, 50, 0.78);
+    border: 1px solid rgba(255, 107, 90, 0.95);
+
+    border-radius: 999px;
+    padding: 7px 12px;
+
+    font-family: theme("fontFamily.mono");
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    color: theme("colors.cream");
+
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+
+    white-space: nowrap;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tag-pill:active {
+    cursor: grabbing;
+  }
+
+  .stage canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: grab;
+  }
+
+  .stage:active canvas {
+    cursor: grabbing;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    appearance: none;
+
+    height: 4px;
+
+    background: rgba(8, 127, 106, 0.30);
+
+    border-radius: 2px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 22px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    background: theme("colors.pink");
+    border: 3px solid theme("colors.cream");
+
+    box-shadow: 0 2px 5px rgba(16, 42, 39, 0.28);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+
+    border: 3px solid theme("colors.cream");
+    border-radius: 50%;
+
+    background: theme("colors.pink");
+  }
+
+  input[type="range"]:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 6px;
+  }
+
+  .drop:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 3px;
+  }
+
+  .slot:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 2px;
+  }
+
+  .subtab:focus-visible {
+    outline: 2px solid theme("colors.pink");
+    outline-offset: 2px;
+  }
+
+  .way:focus-visible {
+    outline: 2px solid theme("colors.ink");
+    outline-offset: 2px;
+  }
+
+  .tabs-btn:focus-visible {
+    outline: 2px solid theme("colors.cream");
+    outline-offset: 2px;
+  }
+
+  .tab-transition {
+    transition:
+      background 0.18s,
+      color 0.18s,
+      border-color 0.18s,
+      box-shadow 0.18s;
+  }
+
+  .shadow-deep {
+    box-shadow: 12px 12px 0 theme("colors.deep");
+  }
+
+  .shadow-pink {
+    box-shadow: 12px 12px 0 rgba(255, 107, 90, 0.9);
+  }
 }
-
-

@@ -1,5 +1,12 @@
-import { drawCover, gridPattern, rr, type Drawable, type Focus } from "../canvas";
+import {
+  drawCover,
+  drawGoaBackground,
+  rr,
+  type Drawable,
+  type Focus,
+} from "../canvas";
 import { C, DISPLAY, EVENT_DATES, HASHTAG, MONO } from "../tokens";
+import { drawQRCode, QR_URL } from "./qr";
 
 export const GROUP_EXPORT = 1200;
 
@@ -20,14 +27,8 @@ export function drawTeamGroup(
   filter = "",
 ) {
   ctx.clearRect(0, 0, S, S);
-  ctx.fillStyle = C.green;
-  ctx.fillRect(0, 0, S, S);
 
-  const grid = gridPattern(ctx, S * 0.06, "rgba(255,251,232,.09)");
-  if (grid) {
-    ctx.fillStyle = grid;
-    ctx.fillRect(0, 0, S, S);
-  }
+  drawGoaBackground(ctx, S, S);
 
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
@@ -73,7 +74,11 @@ export function drawTeamGroup(
  * these as real, draggable HTML elements instead (see Studio.tsx), which is
  * a far better editing experience than hit-testing text inside a canvas.
  */
-export function drawNameTags(ctx: CanvasRenderingContext2D, S: number, tags: NameTag[]) {
+export function drawNameTags(
+  ctx: CanvasRenderingContext2D,
+  S: number,
+  tags: NameTag[],
+) {
   for (const tag of tags) {
     const text = (tag.text.trim() || "Name").toUpperCase();
     ctx.font = `700 ${S * 0.028}px ${MONO}`;
@@ -92,7 +97,12 @@ export function drawNameTags(ctx: CanvasRenderingContext2D, S: number, tags: Nam
     ctx.strokeStyle = "rgba(255,0,128,.9)";
     rr(ctx, x, y, pillW, pillH, pillH / 2);
     ctx.stroke();
+    // QR code linking to the project website
+    const qrSize = S * 0.085;
+    const qrX = S * 0.055;
+    const qrY = S * 0.82;
 
+    drawQRCode(ctx, QR_URL, qrX, qrY, qrSize);
     ctx.fillStyle = C.cream;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";

@@ -2,9 +2,9 @@
  * IdFormFields — name / role / builder title inputs + reroll button.
  */
 const inputCls =
-  "w-full font-display text-base text-ink bg-white border border-green/28 rounded-xl px-[13px] py-3 focus:outline-none focus:border-pink focus:shadow-[0_0_0_3px_rgba(255,0,128,0.16)]";
+  "w-full font-display text-base text-ink bg-white border border-green/30 rounded-xl px-[13px] py-3 focus:outline-none focus:border-pink focus:shadow-[0_0_0_3px_rgba(255,107,90,0.18)]";
 const labelCls =
-  "block font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-ink/55 mb-[6px]";
+  "block font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-deep/70 mb-[6px]";
 
 export function IdFormFields(props: {
   name: string;
