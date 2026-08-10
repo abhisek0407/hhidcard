@@ -24,7 +24,7 @@ export function NameTagEditor(props: {
             <input
               id={`tag-${tag.id}`}
               maxLength={20}
-              placeholder="Krishna"
+              placeholder="Abhisek"
               value={tag.text}
               onChange={(e) => props.onTagChange(tag.id, e.target.value)}
               className={"flex-1 " + inputCls}

@@ -11,9 +11,6 @@ const MAX_BYTES = 6 * 1024 * 1024;
  * falls back to attaching the file directly, which is what mobile does anyway.
  */
 export async function POST(request: Request) {
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
-    return NextResponse.json({ error: "Blob storage not configured" }, { status: 501 });
-  }
 
   const body = await request.arrayBuffer();
   if (!body.byteLength || body.byteLength > MAX_BYTES) {

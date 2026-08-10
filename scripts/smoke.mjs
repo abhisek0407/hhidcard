@@ -54,7 +54,7 @@ out("pfp", PFP_EXPORT, PFP_EXPORT, (ctx) => drawPFP(ctx, PFP_EXPORT, wide, focus
 out("pfp-launch", PFP_EXPORT, PFP_EXPORT, (ctx) => drawPFP(ctx, PFP_EXPORT, wide, focus, "launch"));
 out("id", ID_EXPORT_W, Math.round(ID_EXPORT_W * ID_RATIO), (ctx) =>
   drawID(ctx, ID_EXPORT_W, wide, focus, {
-    name: "Krishna",
+    name: "Abhisek",
     role: "Full-stack · Web3",
     title: "Midnight Shipper",
     no: "042",
@@ -65,20 +65,20 @@ out("banner", BANNER_W, Math.round(BANNER_W * BANNER_RATIO), (ctx) =>
 );
 out("team", TEAM_EXPORT, TEAM_EXPORT, (ctx) =>
   drawTeam(ctx, TEAM_EXPORT, [{ img: wide }, { img: wide }, { img: wide }, { img: wide }], [
-    "Krishna",
-    "Aisha",
-    "Dev",
-    "Rhea",
+    "Abhisek",
+    "Pabitra",
+    "Dibyajyoti",
+
   ]),
 );
 out("team-2", TEAM_EXPORT, TEAM_EXPORT, (ctx) =>
-  drawTeam(ctx, TEAM_EXPORT, [{ img: wide }, { img: wide }], ["Krishna", "Aisha"]),
+  drawTeam(ctx, TEAM_EXPORT, [{ img: wide }, { img: wide }], ["Abhisek", "Pabitra"]),
 );
 out("group", GROUP_EXPORT, GROUP_EXPORT, (ctx) => {
   drawTeamGroup(ctx, GROUP_EXPORT, wide, focus);
   drawNameTags(ctx, GROUP_EXPORT, [
-    { id: "1", text: "Krishna", x: 0.28, y: 0.32 },
-    { id: "2", text: "Aisha", x: 0.72, y: 0.32 },
+    { id: "1", text: "Abhisek", x: 0.28, y: 0.32 },
+    { id: "2", text: "Pabitra", x: 0.72, y: 0.32 },
     { id: "3", text: "A Really Long Teammate Name", x: 0.5, y: 0.72 },
   ]);
 });

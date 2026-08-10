@@ -283,7 +283,7 @@ Launch. All brand values live in `lib/tokens.ts`.
 
 ## Provenance
 
-MIT licensed, copyright Krishna. Every exported PNG carries an embedded
+MIT licensed, copyright Abhisek. Every exported PNG carries an embedded
 `tEXt` metadata chunk identifying the original build and repo — invisible in
 the image, readable with any PNG metadata tool. See `lib/png-meta.ts`.
 

@@ -41,7 +41,7 @@ export function TeamSlots(props: {
           <label htmlFor="tNames" className="block font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-ink/55 mb-[6px]">
             Names, separated by commas
           </label>
-          <input id="tNames" maxLength={60} placeholder="Krishna, Aisha, Dev"
+          <input id="tNames" maxLength={60} placeholder="Abhisek, Dibyajyoti, Pabitra"
             value={props.teamNames}
             onChange={(e) => props.onTeamNamesChange(e.target.value)}
             className={inputCls} />

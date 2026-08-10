@@ -127,7 +127,7 @@ export function usePreviewRender(params: {
   useEffect(() => { scheduleRender(); }, [scheduleRender]);
   useEffect(() => {
     console.log(
-      "%cFrame In Goa %c\u2014 built by Krishna (KrishnaaCodeWala) for HH Goa 2026.\nKRISHNA IS THE BEST.\ngithub.com/KrishnaaCodeWala/framein-goa",
+      "%cFrame In Goa %c\u2014 built by The HackerSmith for HH Goa 2026.\ngithub.com/abhisek0407/hhidcard",
       "color:#FF0080;font-weight:700;font-size:15px",
       "color:#0B6839;font-weight:400;font-size:11px",
     );

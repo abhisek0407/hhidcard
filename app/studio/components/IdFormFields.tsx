@@ -19,7 +19,7 @@ export function IdFormFields(props: {
     <div className="grid gap-3 mt-4">
       <div>
         <label htmlFor="fName" className={labelCls}>Name</label>
-        <input id="fName" maxLength={22} placeholder="Krishna" value={props.name}
+        <input id="fName" maxLength={22} placeholder="Abhisek" value={props.name}
           onChange={(e) => props.onNameChange(e.target.value)}
           className={inputCls} />
       </div>
