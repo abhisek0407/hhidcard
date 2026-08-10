@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@types/qrcode": "^1.5.6",
-    "@vercel/blob": "^0.27.0",
+    "@vercel/blob": "^2.6.1",
     "heic2any": "^0.0.4",
     "next": "15.1.9",
     "qrcode": "^1.5.4",
